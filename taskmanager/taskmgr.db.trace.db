@@ -1,0 +1,34 @@
+2023-05-23 00:19:14 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    alter table if exists notes \000d\000a       alter column created_at set data type TIMESTAMP [*]DEFAULT CURRENT_TIMESTAMP"; SQL statement:
+
+    alter table if exists notes 
+       alter column created_at set data type TIMESTAMP DEFAULT CURRENT_TIMESTAMP [42000-214]
+2023-05-23 00:19:14 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    alter table if exists tasks \000d\000a       alter column created_at set data type TIMESTAMP [*]DEFAULT CURRENT_TIMESTAMP"; SQL statement:
+
+    alter table if exists tasks 
+       alter column created_at set data type TIMESTAMP DEFAULT CURRENT_TIMESTAMP [42000-214]
+2023-05-23 00:19:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    alter table if exists notes \000d\000a       alter column created_at set data type TIMESTAMP [*]DEFAULT CURRENT_TIMESTAMP"; SQL statement:
+
+    alter table if exists notes 
+       alter column created_at set data type TIMESTAMP DEFAULT CURRENT_TIMESTAMP [42000-214]
+2023-05-23 00:19:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "\000d\000a    alter table if exists tasks \000d\000a       alter column created_at set data type TIMESTAMP [*]DEFAULT CURRENT_TIMESTAMP"; SQL statement:
+
+    alter table if exists tasks 
+       alter column created_at set data type TIMESTAMP DEFAULT CURRENT_TIMESTAMP [42000-214]
+2023-05-23 00:57:07 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE [*]* FROM TASKS"; expected "identifier"; SQL statement:
+DELETE * FROM TASKS [42001-214]
+2023-05-23 00:57:58 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE [*]* FROM TASKS T\000d\000aWHERE T.ID IN (SELECT ID FROM TASK)"; expected "identifier"; SQL statement:
+DELETE * FROM TASKS T
+WHERE T.ID IN (SELECT ID FROM TASK) [42001-214]
+2023-05-23 00:58:05 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE [*]* FROM TASKS T\000d\000aWHERE T.ID IN (SELECT ID FROM TASK)"; expected "identifier"; SQL statement:
+DELETE * FROM TASKS T
+WHERE T.ID IN (SELECT ID FROM TASK) [42001-214]
+2023-05-23 00:58:15 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE [*]* FROM TASKS T WHERE T.ID IN (SELECT ID FROM TASK)"; expected "identifier"; SQL statement:
+DELETE * FROM TASKS T WHERE T.ID IN (SELECT ID FROM TASK) [42001-214]
