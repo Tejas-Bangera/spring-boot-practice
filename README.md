@@ -1,2 +1,4 @@
-# spring-boot-practice
-Repo to track spring boot practice projects
+# Spring Boot Practice
+Repository to track spring boot practice projects.
+
+## Task Manager
