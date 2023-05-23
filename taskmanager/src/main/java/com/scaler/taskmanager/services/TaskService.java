@@ -1,6 +1,7 @@
 package com.scaler.taskmanager.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,11 @@ public class TaskService {
     return tasksRepository.findAll();
   }
 
-  public void createTask(TaskEntity task) {
-    tasksRepository.save(task);
+  public TaskEntity createTask(TaskEntity task) {
+    return tasksRepository.save(task);
+  }
+
+  public Optional<TaskEntity> getTask(Integer id) {
+    return tasksRepository.findById(id);
   }
 }
