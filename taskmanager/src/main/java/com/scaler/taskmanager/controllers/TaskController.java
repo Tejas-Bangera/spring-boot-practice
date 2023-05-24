@@ -1,6 +1,5 @@
 package com.scaler.taskmanager.controllers;
 
-import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,49 +12,110 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.scaler.taskmanager.dtos.CreateTaskDTO;
 import com.scaler.taskmanager.dtos.ErrorResponse;
+import com.scaler.taskmanager.dtos.UpdateTaskDTO;
 import com.scaler.taskmanager.entities.TaskEntity;
 import com.scaler.taskmanager.services.TaskService;
 
 @RestController
+@RequestMapping("/tasks")
 public class TaskController {
   
   @Autowired TaskService taskService;
 
-  // Create a task
-  @PostMapping("/tasks")
-  public ResponseEntity<TaskEntity> createTask(@RequestBody TaskEntity task) {
-    var newTask = taskService.createTask(task);
-    return ResponseEntity.created(URI.create("/tasks/" + newTask.getId())).body(newTask);
+  /**
+   * Creates a new Task
+   * @param body
+   * @return Response OK with created task
+   */
+  @PostMapping("")
+  public ResponseEntity<TaskEntity> createTask(@RequestBody CreateTaskDTO body) {
+    var newTask = taskService.createTask(body.getTitle(), body.getDescription(), body.getCompleted(), body.getDueDate());
+
+    return ResponseEntity.ok(newTask);
   }
 
-  // Fetch all tasks
-  @GetMapping("/tasks")
+  /**
+   * Fetch all Tasks
+   * @return List of Tasks
+   */
+  @GetMapping("")
   public ResponseEntity<List<TaskEntity>> getAllTasks() {
     return ResponseEntity.ok(taskService.getAllTasks());
   }
   
   // Fetch a task with the given id
-  @GetMapping("/tasks/{id}")
-  public ResponseEntity<TaskEntity> getTask(@PathVariable Integer id) {
-    return ResponseEntity.ok(taskService.getTask(id));
+  /**
+   * Fetch a Task by id
+   * @param id
+   * @return Response OK with the fetched Task
+   * @throws TaskService.TaskNotFoundException
+   */
+  @GetMapping("/{id}")
+  public ResponseEntity<TaskEntity> getTaskById(@PathVariable Integer id) {
+    TaskEntity task = (taskService.getTaskById(id));
+
+    if(task == null) throw new TaskService.TaskNotFoundException(id);
+
+    return ResponseEntity.ok(task);
   }
 
-  // Delete a task with given id
-  @DeleteMapping("/tasks/{id}")
+  /**
+   * Fetch a Task by title
+   * @param title
+   * @return Response OK with List of Tasks
+   * @throws TaskService.TaskNotFoundException
+   */
+  @GetMapping(
+    value = "",
+    params = "title"
+  )
+  public ResponseEntity<List<TaskEntity>> getTaskByTitle(@RequestParam("title") String title) {
+    List<TaskEntity> tasks = taskService.getTaskByTitle(title);
+
+    if(tasks.isEmpty()) throw new TaskService.TaskNotFoundException();
+
+    return ResponseEntity.ok(tasks);
+  }
+
+  // Fetch completed tasks
+  // TBU
+  
+  /**
+   * Delete a Task by id
+   * @param id
+   */
+  @DeleteMapping("/{id}")
   public void deleteTask(@PathVariable Integer id) {
     taskService.deleteTask(id);
   }
 
-  // Update a task with given id
-  @PatchMapping("/tasks/{id}")
-  public void updateTask(@PathVariable Integer id, @RequestBody TaskEntity updateTask) {
-    taskService.updateTask(id, updateTask);
+  /**
+   * Update a Task by id
+   * @param id
+   * @param updateTaskDTO
+   * @return Response OK with updated Task
+   * @throws TaskService.TaskNotFoundException
+   */
+  @PatchMapping("/{id}")
+  public ResponseEntity<TaskEntity> updateTask(@PathVariable Integer id, @RequestBody UpdateTaskDTO updateTaskDTO) {
+    var task = taskService.updateTask(id, updateTaskDTO.getDescription(), updateTaskDTO.getCompleted(), updateTaskDTO.getDueDate());
+
+    if(task == null) throw new TaskService.TaskNotFoundException(id);
+
+    return ResponseEntity.ok(task);
   }
 
-  // Handle errors
+  /**
+   * Method to handle exceptions
+   * @param e
+   * @return ErrorResponse with appropriate HttpStatus code
+   */
   @ExceptionHandler(TaskService.TaskNotFoundException.class)
   public ResponseEntity<ErrorResponse> handleErrors(TaskService.TaskNotFoundException e) {
     return new ResponseEntity<ErrorResponse>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);

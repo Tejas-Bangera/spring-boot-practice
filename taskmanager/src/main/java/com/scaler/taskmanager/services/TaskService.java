@@ -1,5 +1,6 @@
 package com.scaler.taskmanager.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,9 @@ public class TaskService {
   @Autowired TasksRepository tasksRepository;
 
   public static class TaskNotFoundException extends IllegalStateException {
+    public TaskNotFoundException() {
+      super("Task not found!");
+    }
     public TaskNotFoundException(Integer id) {
       super("Task with id " + id + " not found!");
     }
@@ -23,11 +27,16 @@ public class TaskService {
     return tasksRepository.findAll();
   }
 
-  public TaskEntity createTask(TaskEntity task) {
+  public TaskEntity createTask(String title, String description, Boolean completed, Date dueDate) {
+    TaskEntity task = new TaskEntity();
+    task.setTitle(title);
+    task.setDescription(description);
+    task.setCompleted(completed);
+    task.setDueDate(dueDate);
     return tasksRepository.save(task);
   }
 
-  public TaskEntity getTask(Integer id) {
+  public TaskEntity getTaskById(Integer id) {
     Optional<TaskEntity> task = tasksRepository.findById(id);
 
     if(task.isEmpty()) throw new TaskNotFoundException(id);
@@ -35,11 +44,23 @@ public class TaskService {
     return task.orElseThrow();
   }
 
+  public List<TaskEntity> getTaskByTitle(String title) {
+    return tasksRepository.findByTitle(title);
+  }
+
   public void deleteTask(Integer id) {
     tasksRepository.deleteById(id);
   }
 
-  public void updateTask(Integer id, TaskEntity updateTask) {
-    // TBU
+  public TaskEntity updateTask(Integer id, String description, Boolean completed, Date dueDate) {
+    TaskEntity task = getTaskById(id);
+
+    if(task == null) return null;
+
+    if(description != null) task.setDescription(description);
+    if(completed != null) task.setCompleted(completed);
+    if(dueDate != null) task.setDueDate(dueDate);
+
+    return tasksRepository.save(task);
   }
 }
