@@ -63,4 +63,8 @@ public class TaskService {
 
     return tasksRepository.save(task);
   }
+
+  public List<TaskEntity> getAllTasksByCompleted(Boolean completed) {
+    return tasksRepository.findByCompleted(completed);
+  }
 }

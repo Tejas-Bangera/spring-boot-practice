@@ -12,6 +12,8 @@ import java.util.List;
 public interface TasksRepository extends JpaRepository<TaskEntity, Integer>{
 
   List<TaskEntity> findByTitle(String title);
+
+  List<TaskEntity> findByCompleted(Boolean completed);
   // List<TaskEntity> findAllByCompleted(boolean completed);
 
   // @Query("SELECT t FROM tasks t WHERE t.completed = false AND t.dueDate < CURRENT_DATE")

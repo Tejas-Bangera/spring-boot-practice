@@ -83,8 +83,20 @@ public class TaskController {
     return ResponseEntity.ok(tasks);
   }
 
-  // Fetch completed tasks
-  // TBU
+  /**
+   * Fetch Tasks by completed
+   * @param completed
+   * @return List of Tasks
+   */
+  @GetMapping(
+    value = "",
+    params = "completed"
+  )
+  public ResponseEntity<List<TaskEntity>> getAllTasksByCompleted(@RequestParam("completed") Boolean completed) {
+    List<TaskEntity> tasks = taskService.getAllTasksByCompleted(completed);
+
+    return ResponseEntity.ok(tasks);
+  }
   
   /**
    * Delete a Task by id
