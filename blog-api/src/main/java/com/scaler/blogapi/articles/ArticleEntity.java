@@ -1,10 +1,15 @@
 package com.scaler.blogapi.articles;
 
+import java.util.List;
+
 import com.scaler.blogapi.commons.BaseEntity;
 import com.scaler.blogapi.users.UserEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 @Entity(name = "articles")
@@ -24,4 +29,12 @@ public class ArticleEntity extends BaseEntity {
 
   @ManyToOne
   UserEntity author;
+
+  @ManyToMany
+  @JoinTable(
+    name = "article_likes",
+    joinColumns = @JoinColumn(name = "article_id"),
+    inverseJoinColumns = @JoinColumn(name = "user_id")
+  )
+  List<UserEntity> likedBy;
 }
