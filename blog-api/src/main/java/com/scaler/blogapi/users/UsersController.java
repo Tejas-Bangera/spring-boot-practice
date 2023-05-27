@@ -2,13 +2,16 @@ package com.scaler.blogapi.users;
 
 import java.net.URI;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scaler.blogapi.users.dto.CreateUserDTO;
+import com.scaler.blogapi.users.dto.ErrorResponseDTO;
 import com.scaler.blogapi.users.dto.LoginUserDTO;
 import com.scaler.blogapi.users.dto.UserResponseDTO;
 
@@ -31,7 +34,17 @@ public class UsersController {
   }
 
   @PostMapping("/login")
-  public ResponseEntity<LoginUserDTO> loginuser(@RequestBody LoginUserDTO loginUserDTO) {
-    return null;
+  public ResponseEntity<UserResponseDTO> loginuser(@RequestBody LoginUserDTO loginUserDTO) {
+    return ResponseEntity.ok(usersService.loginUser(loginUserDTO));
+  }
+
+  @ExceptionHandler(UsersService.UserNotFoundException.class)
+  public ResponseEntity<ErrorResponseDTO> handleUserNotFoundError(UsersService.UserNotFoundException errorMessage) {
+    return new ResponseEntity<ErrorResponseDTO>(new ErrorResponseDTO(errorMessage.getMessage()), HttpStatus.NOT_FOUND);
+  }
+
+  @ExceptionHandler(UsersService.IncorrectPasswordException.class)
+  public ResponseEntity<ErrorResponseDTO> handleIncorrectPasswordError(UsersService.IncorrectPasswordException errorMessage) {
+    return new ResponseEntity<ErrorResponseDTO>(new ErrorResponseDTO(errorMessage.getMessage()), HttpStatus.UNAUTHORIZED);
   }
 }
