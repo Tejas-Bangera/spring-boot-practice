@@ -17,12 +17,12 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("/users")
 @AllArgsConstructor
-public class UserController {
-  private final UserService userService;
+public class UsersController {
+  private final UsersService usersService;
 
   @PostMapping("")
   public ResponseEntity<UserResponseDTO> createUser(@RequestBody CreateUserDTO createUserDTO) {
-    UserResponseDTO savedUser = userService.createUser(createUserDTO);
+    UserResponseDTO savedUser = usersService.createUser(createUserDTO);
 
     return ResponseEntity
     .created(URI.create("/users/" + savedUser.getId()))

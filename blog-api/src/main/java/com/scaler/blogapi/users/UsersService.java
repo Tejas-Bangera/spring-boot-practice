@@ -13,8 +13,8 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class UserService {
-  private final UserRepository userRepository;
+public class UsersService {
+  private final UsersRepository userRepository;
   private final ModelMapper modelMapper;
 
   public UserResponseDTO createUser(CreateUserDTO createUserDTO) {

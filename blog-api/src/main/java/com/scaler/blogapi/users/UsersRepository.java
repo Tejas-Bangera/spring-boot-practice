@@ -6,7 +6,7 @@ import java.util.List;
 
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Integer>{
+public interface UsersRepository extends JpaRepository<UserEntity, Integer>{
   List<UserEntity> findByUsername(String username);
 }
 
