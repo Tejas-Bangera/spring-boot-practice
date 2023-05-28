@@ -1,5 +1,6 @@
 package com.scaler.blogapi.users;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -63,5 +64,16 @@ public class UsersService {
     UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 
     return modelMapper.map(userEntity, UserResponseDTO.class);
+  }
+
+  public List<UserResponseDTO> getProfiles() {
+    List<UserEntity> listOfUserEntities = userRepository.findAll();
+    List<UserResponseDTO> listOfUserResponseDTOs = new ArrayList<>();
+
+    for(UserEntity user : listOfUserEntities) {
+      listOfUserResponseDTOs.add(modelMapper.map(user, UserResponseDTO.class));
+    }
+
+    return listOfUserResponseDTOs;
   }
 }
