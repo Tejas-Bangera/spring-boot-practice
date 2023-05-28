@@ -58,4 +58,10 @@ public class UsersService {
       super("Incorrect password!");
     }
   }
+
+  public UserResponseDTO getUser(Integer id) {
+    UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+
+    return modelMapper.map(userEntity, UserResponseDTO.class);
+  }
 }
