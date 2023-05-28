@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.scaler.blogapi.users.dto.CreateUserDTO;
 import com.scaler.blogapi.users.dto.LoginUserDTO;
+import com.scaler.blogapi.users.dto.UserProfileResponseDTO;
 import com.scaler.blogapi.users.dto.UserResponseDTO;
 
 import lombok.AllArgsConstructor;
@@ -66,22 +67,22 @@ public class UsersService {
     return modelMapper.map(userEntity, UserResponseDTO.class);
   }
 
-  public List<UserResponseDTO> getProfiles() {
+  public List<UserProfileResponseDTO> getProfiles() {
     List<UserEntity> listOfUserEntities = userRepository.findAll();
-    List<UserResponseDTO> listOfUserResponseDTOs = new ArrayList<>();
+    List<UserProfileResponseDTO> listOfUserProfileDTOs = new ArrayList<>();
 
     for(UserEntity user : listOfUserEntities) {
-      listOfUserResponseDTOs.add(modelMapper.map(user, UserResponseDTO.class));
+      listOfUserProfileDTOs.add(modelMapper.map(user, UserProfileResponseDTO.class));
     }
 
-    return listOfUserResponseDTOs;
+    return listOfUserProfileDTOs;
   }
 
-  public UserResponseDTO getProfileByUserName(String userName) {
+  public UserProfileResponseDTO getProfileByUserName(String userName) {
     List<UserEntity> users = userRepository.findByUsername(userName);
 
     if(users.isEmpty()) throw new UserNotFoundException(userName);
 
-    return modelMapper.map(users.get(0), UserResponseDTO.class);
+    return modelMapper.map(users.get(0), UserProfileResponseDTO.class);
   }
 }

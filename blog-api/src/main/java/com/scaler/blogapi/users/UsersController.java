@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.scaler.blogapi.users.dto.CreateUserDTO;
 import com.scaler.blogapi.users.dto.ErrorResponseDTO;
 import com.scaler.blogapi.users.dto.LoginUserDTO;
+import com.scaler.blogapi.users.dto.UserProfileResponseDTO;
 import com.scaler.blogapi.users.dto.UserResponseDTO;
 
 import lombok.AllArgsConstructor;
@@ -45,12 +46,12 @@ public class UsersController {
   }
 
   @GetMapping("/profiles")
-  public ResponseEntity<List<UserResponseDTO>> getProfiles() {
+  public ResponseEntity<List<UserProfileResponseDTO>> getProfiles() {
     return ResponseEntity.ok(usersService.getProfiles());
   }
 
   @GetMapping("/profiles/{userName}")
-  public ResponseEntity<UserResponseDTO> getProfileByUserName(@PathVariable String userName) {
+  public ResponseEntity<UserProfileResponseDTO> getProfileByUserName(@PathVariable String userName) {
     return ResponseEntity.ok(usersService.getProfileByUserName(userName));
   }
 
