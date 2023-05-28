@@ -76,4 +76,12 @@ public class UsersService {
 
     return listOfUserResponseDTOs;
   }
+
+  public UserResponseDTO getProfileByUserName(String userName) {
+    List<UserEntity> users = userRepository.findByUsername(userName);
+
+    if(users.isEmpty()) throw new UserNotFoundException(userName);
+
+    return modelMapper.map(users.get(0), UserResponseDTO.class);
+  }
 }

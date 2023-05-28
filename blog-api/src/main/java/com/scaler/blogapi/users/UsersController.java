@@ -49,6 +49,11 @@ public class UsersController {
     return ResponseEntity.ok(usersService.getProfiles());
   }
 
+  @GetMapping("/profiles/{userName}")
+  public ResponseEntity<UserResponseDTO> getProfileByUserName(@PathVariable String userName) {
+    return ResponseEntity.ok(usersService.getProfileByUserName(userName));
+  }
+
   @ExceptionHandler(UsersService.UserNotFoundException.class)
   public ResponseEntity<ErrorResponseDTO> handleUserNotFoundError(UsersService.UserNotFoundException errorMessage) {
     return new ResponseEntity<ErrorResponseDTO>(new ErrorResponseDTO(errorMessage.getMessage()), HttpStatus.NOT_FOUND);
