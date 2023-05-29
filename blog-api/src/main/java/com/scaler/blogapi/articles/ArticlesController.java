@@ -1,9 +1,11 @@
 package com.scaler.blogapi.articles;
 
 import java.net.URI;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +29,11 @@ public class ArticlesController {
     ArticleResponseDTO articleResponseDTO = modelMapper.map(articleEntity, ArticleResponseDTO.class);
 
     return ResponseEntity.created(URI.create("/articles/" + articleEntity.getId())).body(articleResponseDTO);
+  }
+
+  @GetMapping("")
+  public ResponseEntity<List<ArticleResponseDTO>> getAllArticles() {
+    return ResponseEntity.ok(articlesService.getAllArticles());
   }
 
 }
