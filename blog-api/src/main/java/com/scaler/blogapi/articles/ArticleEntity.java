@@ -11,15 +11,19 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity(name = "articles")
+@Getter
+@Setter
 public class ArticleEntity extends BaseEntity {
-
-  @Column(unique = true, nullable = false, length = 150)
-  String slug;
 
   @Column(nullable = false, length = 200)
   String title;
+
+  @Column(unique = true, nullable = false, length = 150)
+  String slug;
 
   String subTitle;
 
