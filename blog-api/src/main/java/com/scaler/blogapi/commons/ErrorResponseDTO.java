@@ -1,4 +1,4 @@
-package com.scaler.blogapi.users.dto;
+package com.scaler.blogapi.commons;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

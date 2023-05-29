@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.scaler.blogapi.commons.ErrorResponseDTO;
 import com.scaler.blogapi.users.dto.CreateUserDTO;
-import com.scaler.blogapi.users.dto.ErrorResponseDTO;
 import com.scaler.blogapi.users.dto.LoginUserDTO;
 import com.scaler.blogapi.users.dto.UserProfileResponseDTO;
 import com.scaler.blogapi.users.dto.UserResponseDTO;
